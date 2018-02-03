@@ -22,7 +22,7 @@ var audio = new Audio('audio/card.mp3');
 const gameSurface = document.getElementById('game-surface');
 gameSurface.addEventListener('click', cardClick)
 const replayButton = document.getElementById('replay-button');
-replayButton.addEventListener('click', startGame);
+replayButton.addEventListener('click', restartGame);
 
 
 function createDeck() {
@@ -67,12 +67,9 @@ function checkOpenCards(card) {
             card1.setAttribute('class', 'card match');
             card2.setAttribute('class', 'card match');
             remainingMatches -=1;
-
         }
         else {
             setTimeout(function() {
-              //your code to be executed after 1 second
-
             card1.setAttribute('class', 'card');
             card2.setAttribute('class', 'card');
             }, delayInMilliseconds);
@@ -80,7 +77,6 @@ function checkOpenCards(card) {
         openCards.pop();
         incrementMoveCounter();
     }
-    // If the list is empty, add this card to the listener
     else if (openCards.length === 0) {
         openCards.push(card)
     }
@@ -93,11 +89,9 @@ function cardClick(event) {
         });
         if (!(card.matched)){
         showIcon(event);
-
-audio.play();
+        audio.play();
         checkOpenCards(card);
-
-        if (remainingMatches ===0) {
+        if (remainingMatches === 0) {
             gameFinish();
         }
     }
@@ -127,12 +121,21 @@ function startGame() {
     //Start Timer
     let array = shuffle(createDeck());
     let cardHolders = document.getElementsByClassName('card');
-
     placeCards(array);
 
 }
 
+function restartGame() {
+    moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length;
+    document.getElementById('move-counter').innerText = moveCounter;
+    document.getElementById('popup').style.display='none';
+    while (gameSurface.firstChild) {
+    gameSurface.removeChild(gameSurface.firstChild);
+    }
+    startGame()
 
+
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
