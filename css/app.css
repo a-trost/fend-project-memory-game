@@ -55,7 +55,8 @@ h1 {
 .deck .card {
     height: 125px;
     width: 125px;
-    background: #2e3d49;
+    background: #2e3d49 url('../img/congruent_pentagon.png');
+    
     font-size: 0;
     color: #ffffff;
     border-radius: 8px;
@@ -68,7 +69,8 @@ h1 {
 
 .deck .card.open {
     transform: rotateY(0);
-    background: #02b3e4;
+    background: #02b3e4  url('../img/congruent_pentagon_blue.png') ;
+    background-size: cover;
     cursor: default;
 }
 
@@ -78,7 +80,8 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: #02ccba;
+    background: #02ccba  url('../img/congruent_pentagon_green.png');
+    background-size: cover;
     font-size: 33px;
 }
 
@@ -107,4 +110,16 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+#popup {
+    margin: auto;
+    display: none;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width:500px;
+    height:400px;
+    border: solid black 3px;
+    background: #ffffff;
+    text-align: center;
 }
