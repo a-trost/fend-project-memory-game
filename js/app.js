@@ -6,23 +6,23 @@ function Card(icon, phrase) {
 }
 
 let icons = [
-    ["diamond", "Luxurious!"],
-    ["paper-plane-o", "High Flying!"],
+    ["gem", "Luxurious!"],
+    ["heart", "High Flying!"],
     ["anchor", "Anchors Aweigh!"],
     ["bolt", "Electrifying!"],
     ["magic", "Magical!"],
     ["bomb", "Explosive!"],
     ["paw", "Bright!"],
-    ["soccer-ball-o", "Goooooaaaal!"],
+    ["birthday-cake", "Delicious!"],
 ]
-let moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length;
+let moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
 let startTime = Date.now();
 const delayInMilliseconds = 1000; //Display cards for 1 sec
 var audio = new Audio('audio/card.mp3');
 const gameSurface = document.getElementById('game-surface');
 gameSurface.addEventListener('click', cardClick);
-const replayButton = document.getElementById('replay-button');
-replayButton.addEventListener('click', restartGame);
+// const replayButton = document.getElementById('replay-button');
+// replayButton.addEventListener('click', restartGame);
 
 
 function createDeck() {
@@ -45,7 +45,6 @@ function shuffle(array) {
     }
     return array;
 }
-
 
 function showIcon(event) {
 
@@ -100,6 +99,8 @@ function cardClick(event) {
 function gameFinish() {
     let seconds = (Date.now() - startTime)/1000;
     let stars = returnStarRating(seconds, moveCounter)
+    const starContainer = document.getElementById('star-container')
+
     document.getElementById('popup').style.display='block';
 };
 
@@ -108,7 +109,7 @@ function placeCards(array) {
     const fragment = document.createDocumentFragment();
     for (i=0; i<array.length; i++) {
         const newCard = document.createElement('li');
-        newCard.innerHTML = '<i class="fa fa-' + array[i].icon+'"></i>';
+        newCard.innerHTML = '<i class="fas fa-' + array[i].icon+'"></i>';
         newCard.className = "card";
         newCard.id= "card-"+i;
         array[i].position = 'card-'+i;
@@ -125,7 +126,10 @@ function startGame() {
 }
 
 function returnStarRating(seconds, moves) {
-    let stars = 1;
+    let stars = 0;
+    if (hintsUsed === 0){
+        stars++;
+    };
     if (seconds < 40) {
         stars++;
     };
@@ -137,7 +141,6 @@ function returnStarRating(seconds, moves) {
 
 function giveHint() {
     if (openCards.length === 1 ) {
-
         matchingCard = array.find(function(element) {
             return element.icon == openCards[0].icon && element.position != openCards[0].position;
         });
@@ -158,10 +161,11 @@ function giveHint() {
         card1Node.setAttribute('class', 'card hint');
         card2Node.setAttribute('class', 'card hint');
     }
+    hintsUsed++;
 }
 
 function restartGame() {
-    moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length;
+    moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
     startTime = Date.now();
     document.getElementById('move-counter').innerText = moveCounter;
     document.getElementById('popup').style.display='none';

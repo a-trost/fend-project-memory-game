@@ -14,11 +14,12 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    color: #bc3624;
 }
 
 body {
     background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Asap', Arial, sans-serif;
 }
 
 .container {
@@ -29,12 +30,13 @@ body {
 }
 
 h1, h2 {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 300;
+    font-family: 'Asap', sans-serif;
+    font-weight: 700;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 4rem;
+    line-height: 2rem;
 }
 
 .winner {
@@ -92,44 +94,101 @@ h1 {
     font-size: 33px;
 }
 
-.deck .card.hint {
-    background: #f1c40f;
-}
+
 /*
  * Styles for the Score Panel
  */
 
 .score-panel {
-    text-align: left;
-    width: 345px;
+    text-align: center;
+    /* width: 660px; */
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 10px;
-}
+    height: 70px;
 
-.score-panel .stars {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    margin: 0 5px 0 0;
-}
-
-.score-panel .stars li {
-    list-style: none;
-    display: inline-block;
-}
-
-.score-panel .restart {
-    float: right;
-    cursor: pointer;
 }
 
 #popup {
     margin: auto;
     display: none;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 90; left: 0; bottom: 0; right: 0;
+        border-radius: 10px;
     width:500px;
-    height:400px;
+    height:600px;
     border: solid black 3px;
     background: #ffffff;
     text-align: center;
+}
+
+
+@-webkit-keyframes wiggle {
+	0% { -webkit-transform: translate(4px, 0); }
+	50% { -webkit-transform: translate(-4px, 0); }
+	100% { -webkit-transform: translate(4px, 0); }
+}
+
+.hint {
+	-webkit-animation-name: wiggle;
+	-webkit-animation-duration: 0.5s;
+	-webkit-transform-origin:50% 50%;
+	-webkit-animation-timing-function: linear;
+  background-color: #c0392b;
+}
+
+/*
+Styles for buttons
+Code by www.twitter.com/cheeriottis
+*/
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+	position: relative;
+	padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  float: left;
+	border-radius: 10px;
+	font-family: 'Asap', sans-serif;
+	font-size: 25px;
+    cursor: pointer;
+	text-decoration: none;
+}
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+    	color: #FFF;
+}
+
+.green
+{
+	background-color: #27ae60;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+    	color: #FFF;
+}
+.yellow
+{
+	background-color: #f1c40f;
+	border-bottom: 5px solid #D1B358;
+	text-shadow: 0px -2px #D1B358;
+    	color: #FFF;
+}
+.moves
+{
+    border: 3px solid #BD3E31;
+}
+
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
 }
