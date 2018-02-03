@@ -15,12 +15,12 @@ let icons = [
     ["paw", "Bright!"],
     ["soccer-ball-o", "Goooooaaaal!"],
 ]
-
 let moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length;
+let startTime = Date.now();
 const delayInMilliseconds = 1000; //Display cards for 1 sec
 var audio = new Audio('audio/card.mp3');
 const gameSurface = document.getElementById('game-surface');
-gameSurface.addEventListener('click', cardClick)
+gameSurface.addEventListener('click', cardClick);
 const replayButton = document.getElementById('replay-button');
 replayButton.addEventListener('click', restartGame);
 
@@ -58,7 +58,6 @@ function incrementMoveCounter() {
 }
 
 function checkOpenCards(card) {
-    console.log(card.position);
     if (openCards.length === 1 && openCards[0].position != card.position) {
         let card1 = document.getElementById(openCards[0].position);
         let card2 = document.getElementById(card.position);
@@ -99,6 +98,8 @@ function cardClick(event) {
 }
 
 function gameFinish() {
+    let seconds = (Date.now() - startTime)/1000;
+    let stars = returnStarRating(seconds, moveCounter)
     document.getElementById('popup').style.display='block';
 };
 
@@ -125,17 +126,43 @@ function startGame() {
 
 function returnStarRating(seconds, moves) {
     let stars = 1;
-    if (seconds < 60) {
+    if (seconds < 40) {
         stars++;
     };
-    if (moves < 16) {
+    if (moves < 17) {
         stars ++;
     };
     return stars;
 }
 
+function giveHint() {
+    if (openCards.length === 1 ) {
+
+        matchingCard = array.find(function(element) {
+            return element.icon == openCards[0].icon && element.position != openCards[0].position;
+        });
+        console.log(matchingCard)
+        let card2Node = document.getElementById(matchingCard.position);
+        card2Node.setAttribute('class', 'card hint');
+}
+    else {
+        card1 = array.find(function(element) {
+            return element.matched === false;
+        });
+        card2 = array.find(function(element) {
+            return element.icon == card1.icon && element.position != card1.position;
+        })
+        let card1Node = document.getElementById(card1.position);
+        let card2Node = document.getElementById(card2.position);
+
+        card1Node.setAttribute('class', 'card hint');
+        card2Node.setAttribute('class', 'card hint');
+    }
+}
+
 function restartGame() {
     moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length;
+    startTime = Date.now();
     document.getElementById('move-counter').innerText = moveCounter;
     document.getElementById('popup').style.display='none';
     while (gameSurface.firstChild) {
