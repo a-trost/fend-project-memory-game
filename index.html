@@ -14,9 +14,10 @@
             <h1>Match Up!</h1>
         </header>
     <section id="start-panel">
-        <div class="half">
-            <p>Match the cards.</p>
-<p>Try without hints!</p></div>
+        <div class="half instructions">
+            Match the cards. <br>
+Try without hints!</div>
+
 <div class="half">
     <div onclick="startGame()" class="action-button shadow animate btn-start">Deal Cards</div>
 </div>
@@ -27,6 +28,7 @@
             <div onclick="giveHint()" class="action-button shadow animate green"><i class="fas fa-lightbulb"></i> Hint</div>
             <div onclick="startGame()" class="action-button shadow animate yellow"><i class="fas fa-redo"></i> Restart</div>
         </section>
+<div id="phrase-holder"></div>
 
         <ul class="deck" id="game-surface">
         </ul>

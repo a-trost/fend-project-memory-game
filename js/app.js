@@ -7,15 +7,16 @@ function Card(icon, phrase) {
 
 let icons = [
     ["gem", "Luxurious!"],
-    ["heart", "High Flying!"],
+    ["heart", "Love It!"],
     ["anchor", "Anchors Aweigh!"],
     ["bolt", "Electrifying!"],
     ["magic", "Magical!"],
     ["bomb", "Explosive!"],
-    ["paw", "Bright!"],
+    ["paw", "Hot Dog!"],
     ["birthday-cake", "Delicious!"],
 ]
 let moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
+const phraseHolder = document.getElementById('phrase-holder')
 let startTime = Date.now();
 const delayInMilliseconds = 1000; //Display cards for 1 sec
 var audio = new Audio('audio/card.mp3');
@@ -65,6 +66,11 @@ function checkOpenCards(card) {
             card1.setAttribute('class', 'card match');
             card2.setAttribute('class', 'card match');
             remainingMatches -=1;
+            phraseHolder.style.display='block'
+            phraseHolder.innerHTML='<span class="success-phrase">'+card.phrase+'</span>';
+            setTimeout(function() {
+            phraseHolder.style.display='none'
+            }, delayInMilliseconds);
         }
         else {
             setTimeout(function() {
@@ -95,9 +101,6 @@ function cardClick(event) {
     }
 };
 }
-
-
-
 
 function placeCards(array) {
     const fragment = document.createDocumentFragment();
@@ -164,7 +167,6 @@ function gameFinish() {
 
 function startGame() {
     moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
-
     document.getElementById('move-counter').innerText = moveCounter;
     document.getElementById('popup').style.display='none';
     document.getElementById('start-panel').style.display='none';
