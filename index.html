@@ -11,7 +11,13 @@
 <body>
     <div class="container">
         <header>
+            <div class="half">
             <h1>Match Up!</h1>
+        </div>
+        <div class="half" id="star-display">
+            <img src="img/star-3.svg">
+        </div>
+
         </header>
     <section id="start-panel">
         <div class="half instructions">
@@ -28,7 +34,7 @@ Try without hints!</div>
             <div class="action-button moves">Time: <span id="game-timer">0</span></div>
             <div onclick="giveHint()" class="action-button shadow animate blue"><i class="fas fa-lightbulb"></i> Hint</div>
             <div onclick="startGame()" class="action-button shadow animate yellow"><i class="fas fa-redo"></i> Restart</div>
-            
+
         </section>
 <div id="phrase-holder"></div>
 

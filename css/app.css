@@ -28,6 +28,16 @@ body {
     align-items: center;
     flex-direction: column;
 }
+header {
+width:660px;
+text-align: left;
+}
+
+#star-display img{
+    height:80px;
+    float:right;
+    margin-top:15px;
+}
 
 #start-panel {
     display:block;
@@ -164,7 +174,7 @@ h1 {
     display: none;
     position: absolute;
     z-index: 7;
-    top: 100px; left: 0; bottom: 0; right: 0;
+    top: 0; left: 0; bottom: 0; right: 0;
     border-radius: 10px;
     width:500px;
     height:600px;
