@@ -15,7 +15,11 @@ let icons = [
     ["paw", "Hot Dog!"],
     ["birthday-cake", "Delicious!"],
 ]
-let moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
+let moveCounter = 0,
+    openCards = [],
+    array = [],
+    remainingMatches = icons.length,
+    hintsUsed = 0;
 const phraseHolder = document.getElementById('phrase-holder')
 const timeHolder = document.getElementById('game-timer')
 let seconds = 0;
@@ -24,21 +28,19 @@ const delayInMilliseconds = 1000; //Display cards for 1 sec
 var audio = new Audio('audio/card.mp3');
 const gameSurface = document.getElementById('game-surface');
 gameSurface.addEventListener('click', cardClick);
-// const replayButton = document.getElementById('replay-button');
-// replayButton.addEventListener('click', restartGame);
-
 
 function createDeck() {
     doubleIcons = icons.concat(icons);
-    for (i=0; i<doubleIcons.length; i++) {
+    for (i = 0; i < doubleIcons.length; i++) {
         array.push(new Card(doubleIcons[i][0], doubleIcons[i][1]));
     }
     return array;
-    }
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -55,7 +57,7 @@ function showIcon(event) {
 };
 
 function incrementMoveCounter() {
-    moveCounter +=1;
+    moveCounter += 1;
     document.getElementById('move-counter').innerText = moveCounter;
 }
 
@@ -63,27 +65,25 @@ function checkOpenCards(card) {
     if (openCards.length === 1 && openCards[0].position != card.position) {
         let card1 = document.getElementById(openCards[0].position);
         let card2 = document.getElementById(card.position);
-        if (openCards[0].icon == card.icon ) {
-            card.matched = true, openCards[0].matched=true;
+        if (openCards[0].icon == card.icon) {
+            card.matched = true, openCards[0].matched = true;
             card1.setAttribute('class', 'card match');
             card2.setAttribute('class', 'card match');
-            remainingMatches -=1;
-            phraseHolder.style.display='block'
-            phraseHolder.innerHTML='<span class="success-phrase">'+card.phrase+'</span>';
+            remainingMatches -= 1;
+            phraseHolder.style.display = 'block'
+            phraseHolder.innerHTML = '<span class="success-phrase">' + card.phrase + '</span>';
             setTimeout(function() {
-            phraseHolder.style.display='none'
+                phraseHolder.style.display = 'none'
             }, delayInMilliseconds);
-        }
-        else {
+        } else {
             setTimeout(function() {
-            card1.setAttribute('class', 'card');
-            card2.setAttribute('class', 'card');
+                card1.setAttribute('class', 'card');
+                card2.setAttribute('class', 'card');
             }, delayInMilliseconds);
         }
         openCards.pop();
         incrementMoveCounter();
-    }
-    else if (openCards.length === 0) {
+    } else if (openCards.length === 0) {
         openCards.push(card)
     }
 }
@@ -93,26 +93,26 @@ function cardClick(event) {
         card = array.find(function(element) {
             return element.position == event.toElement.id;
         });
-        if (!(card.matched)){
-        showIcon(event);
-        audio.play();
-        checkOpenCards(card);
-        updateStars();
-        if (remainingMatches === 0) {
-            gameFinish();
+        if (!(card.matched)) {
+            showIcon(event);
+            audio.play();
+            checkOpenCards(card);
+            updateStars();
+            if (remainingMatches === 0) {
+                gameFinish();
+            }
         }
-    }
-};
+    };
 }
 
 function placeCards(array) {
     const fragment = document.createDocumentFragment();
-    for (i=0; i<array.length; i++) {
+    for (i = 0; i < array.length; i++) {
         const newCard = document.createElement('li');
-        newCard.innerHTML = '<i class="fas fa-' + array[i].icon+'"></i>';
+        newCard.innerHTML = '<i class="fas fa-' + array[i].icon + '"></i>';
         newCard.className = "card enter back";
-        newCard.id= "card-"+i;
-        array[i].position = 'card-'+i;
+        newCard.id = "card-" + i;
+        array[i].position = 'card-' + i;
         fragment.appendChild(newCard);
     };
     gameSurface.appendChild(fragment);
@@ -122,28 +122,27 @@ function placeCards(array) {
 
 function returnStarRating(seconds, moves) {
     let stars = 0;
-    if (hintsUsed === 0){
+    if (hintsUsed === 0) {
         stars++;
     };
     if (seconds < 40) {
         stars++;
     };
     if (moves < 17) {
-        stars ++;
+        stars++;
     };
     return stars;
 }
 
 function giveHint() {
-    if (openCards.length === 1 ) {
+    if (openCards.length === 1) {
         matchingCard = array.find(function(element) {
             return element.icon == openCards[0].icon && element.position != openCards[0].position;
         });
         console.log(matchingCard)
         let card2Node = document.getElementById(matchingCard.position);
         card2Node.setAttribute('class', 'card hint');
-}
-    else {
+    } else {
         card1 = array.find(function(element) {
             return element.matched === false;
         });
@@ -159,7 +158,7 @@ function giveHint() {
 }
 
 function gameTimer() {
-    seconds = Math.round((Date.now() - startTime)/1000);
+    seconds = Math.round((Date.now() - startTime) / 1000);
     timeHolder.innerText = seconds;
     updateStars();
 
@@ -171,36 +170,35 @@ function stopTimer() {
 
 function updateStars() {
     stars = returnStarRating(seconds, moveCounter);
-    document.getElementById('star-display').innerHTML = '<img src="img/star-'+stars+'.svg">';
+    document.getElementById('star-display').innerHTML = '<img src="img/star-' + stars + '.svg">';
 }
 
 
 
 function gameFinish() {
     stopTimer();
-    // let seconds = Math.round((Date.now() - startTime)/1000);
     let stars = returnStarRating(seconds, moveCounter);
     const starContainer = document.getElementById('star-container');
-    starContainer.innerHTML = '<img src="img/star-'+stars+'.svg">';
-    document.getElementById('popup').style.display='block';
+    starContainer.innerHTML = '<img src="img/star-' + stars + '.svg">';
+    document.getElementById('popup').style.display = 'block';
     document.getElementById('final-move-counter').innerText = moveCounter;
     document.getElementById('final-time-counter').innerText = seconds;
     document.getElementById('final-hint-counter').innerText = hintsUsed;
 };
 
 function startGame() {
-    moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
+    moveCounter = 0, openCards = [], array = [], remainingMatches = icons.length, hintsUsed = 0;
     document.getElementById('move-counter').innerText = moveCounter;
-    document.getElementById('popup').style.display='none';
-    document.getElementById('start-panel').style.display='none';
-    document.getElementById('score-panel').style.display='block';
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('start-panel').style.display = 'none';
+    document.getElementById('score-panel').style.display = 'block';
     while (gameSurface.firstChild) {
-    gameSurface.removeChild(gameSurface.firstChild);
+        gameSurface.removeChild(gameSurface.firstChild);
     }
     array = shuffle(createDeck());
     console.log(array);
     let cardHolders = document.getElementsByClassName('card');
     placeCards(array);
     startTime = Date.now();
-    timer = setInterval( gameTimer, 1000 );
+    timer = setInterval(gameTimer, 1000);
 }
