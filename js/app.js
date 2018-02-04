@@ -138,9 +138,6 @@ function placeCards(array) {
 
 function returnStarRating(seconds, moves) {
     let stars = 0;
-    if (hintsUsed === 0) {
-        stars++;
-    };
     if (seconds < 40) {
         stars++;
     };
