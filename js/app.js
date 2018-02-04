@@ -1,3 +1,11 @@
+/**
+* @description Represents a card
+* @constructor
+* @param {string} icon - The icon that will be displayed on the card
+* @param {string} phrase - The catch phrase that will appear when this card is matched.
+* @param {boolean} matched - If the card is matched to its pair
+* @param {string} positon - Position on the grid. Left to right, 0-15.
+*/
 function Card(icon, phrase) {
     this.icon = icon;
     this.phrase = phrase;
@@ -5,6 +13,7 @@ function Card(icon, phrase) {
     this.position;
 }
 
+//Set initial global variables
 let icons = [
     ["gem", "Luxurious!"],
     ["heart", "Love It!"],
@@ -29,6 +38,9 @@ var audio = new Audio('audio/card.mp3');
 const gameSurface = document.getElementById('game-surface');
 gameSurface.addEventListener('click', cardClick);
 
+/*
+* Set game functions
+*/
 function createDeck() {
     doubleIcons = icons.concat(icons);
     for (i = 0; i < doubleIcons.length; i++) {
@@ -52,15 +64,18 @@ function shuffle(array) {
 }
 
 function showIcon(event) {
-
     event.target.setAttribute('class', 'card open show');
 };
 
 function incrementMoveCounter() {
-    moveCounter += 1;
+    moveCounter += 1; // Choosing 2 cards = 1 move
     document.getElementById('move-counter').innerText = moveCounter;
 }
 
+/**
+* @description Checks the selected card(s) for matches
+* @param {number} card - The most recently clicked card
+*/
 function checkOpenCards(card) {
     if (openCards.length === 1 && openCards[0].position != card.position) {
         let card1 = document.getElementById(openCards[0].position);
@@ -105,6 +120,9 @@ function cardClick(event) {
     };
 }
 
+/**
+* @description Places cards after they've been shuffled
+*/
 function placeCards(array) {
     const fragment = document.createDocumentFragment();
     for (i = 0; i < array.length; i++) {
@@ -116,9 +134,7 @@ function placeCards(array) {
         fragment.appendChild(newCard);
     };
     gameSurface.appendChild(fragment);
-
 };
-
 
 function returnStarRating(seconds, moves) {
     let stars = 0;
@@ -161,7 +177,6 @@ function gameTimer() {
     seconds = Math.round((Date.now() - startTime) / 1000);
     timeHolder.innerText = seconds;
     updateStars();
-
 }
 
 function stopTimer() {
@@ -173,7 +188,11 @@ function updateStars() {
     document.getElementById('star-display').innerHTML = '<img src="img/star-' + stars + '.svg">';
 }
 
-
+function clearCards() {
+    while (gameSurface.firstChild) {
+        gameSurface.removeChild(gameSurface.firstChild);
+    };
+}
 
 function gameFinish() {
     stopTimer();
@@ -184,7 +203,7 @@ function gameFinish() {
     document.getElementById('final-move-counter').innerText = moveCounter;
     document.getElementById('final-time-counter').innerText = seconds;
     document.getElementById('final-hint-counter').innerText = hintsUsed;
-};
+}
 
 function startGame() {
     moveCounter = 0, openCards = [], array = [], remainingMatches = icons.length, hintsUsed = 0;
@@ -192,11 +211,8 @@ function startGame() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('start-panel').style.display = 'none';
     document.getElementById('score-panel').style.display = 'block';
-    while (gameSurface.firstChild) {
-        gameSurface.removeChild(gameSurface.firstChild);
-    }
+    clearCards();
     array = shuffle(createDeck());
-    console.log(array);
     let cardHolders = document.getElementsByClassName('card');
     placeCards(array);
     startTime = Date.now();

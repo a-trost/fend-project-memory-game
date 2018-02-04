@@ -1,9 +1,11 @@
 html {
      box-sizing: border-box;
 }
+
  *, *::before, *::after {
      box-sizing: inherit;
 }
+
  html, body {
      width: 100%;
      height: 100%;
@@ -11,50 +13,57 @@ html {
      padding: 0;
      color: #bc3624;
 }
+
  body {
      background: #ffffff url('../img/geometry2.png');
     /* Background pattern from Subtle Patterns */
      font-family: 'Asap', Arial, sans-serif;
 }
+
+h1, h2 {
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 4rem;
+    line-height: 2rem;
+}
+
  .container {
      display: flex;
      justify-content: center;
      align-items: center;
      flex-direction: column;
 }
+
+.half {
+    float:left;
+    width:50%;
+    padding:10px;
+    text-align: left;
+}
+
  header {
      width:660px;
      text-align: left;
 }
+
  #star-display img{
      height:80px;
      float:right;
      margin-top:15px;
 }
+
+/* Panel for starting the game */
  #start-panel {
      display:block;
      width: 660px;
 }
+
  #start-panel .instructions {
      font-size: 2rem;
 }
- .half {
-     float:left;
-     width:50%;
-     padding:10px;
-     text-align: left;
-}
- h1, h2 {
-     font-weight: 700;
-}
- h1 {
-     font-size: 4rem;
-     line-height: 2rem;
-}
- .winner {
-     font-size: 3rem;
-     color:#f39c12;
-}
+
 /* * Styles for the deck of cards */
  .deck {
      width: 660px;
@@ -69,35 +78,23 @@ html {
      align-items: center;
      margin: 0 0 3em;
 }
+
  @-webkit-keyframes card-enter {
      0% {
          -webkit-transform: translate(0, -500px);
     }
-    /* 50% {
-         -webkit-transform: translate(-5px, 0);
-    }
-     */
+
      100% {
          -webkit-transform: translate(0, 0);
     }
 }
- @-webkit-keyframes card-flip {
-     0% {
-         -webkit-transform: scaleX(0%);
-    }
-    /* 50% {
-         -webkit-transform: translate(-5px, 0);
-    }
-     */
-     100% {
-         -webkit-transform: scaleX(100%);
-    }
-}
+
  .deck .card:hover {
      border-bottom: 1px solid #222222;
      -webkit-transform: scale(1.1, 1.1);
      transform: scale(1.1, 1.1);
 }
+
  .deck .card {
      height: 125px;
      width: 125px;
@@ -113,12 +110,14 @@ html {
      -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
      transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
  .deck .card.enter {
      -webkit-animation-name: card-enter;
      -webkit-animation-duration: 0.7s;
      -webkit-transform-origin:50% 50%;
      -webkit-animation-timing-function: linear;
 }
+
  .deck .card.open {
      transform: rotateY(0);
      background: #02b3e4 url('../img/congruent_pentagon_blue.png') ;
@@ -127,9 +126,11 @@ html {
      transform: rotateY( 180deg );
      transition: transform .5s;
 }
+
  .deck .card.show {
      font-size: 33px;
 }
+
  .deck .card.match {
      cursor: default;
      background: #02ccba url('../img/congruent_pentagon_green.png');
@@ -137,6 +138,7 @@ html {
      font-size: 33px;
      transition: none;
 }
+
  .deck .card.match:hover {
      -webkit-transform: translate(0);
      -webkit-animation-duration: 0;
@@ -152,6 +154,29 @@ html {
      margin-bottom: 10px;
      height: 70px;
 }
+
+.hint {
+    -webkit-animation-name: wiggle;
+    -webkit-animation-duration: 0.5s;
+    -webkit-transform-origin:50% 50%;
+    -webkit-animation-timing-function: linear;
+    background-color: #c0392b;
+}
+
+@-webkit-keyframes wiggle {
+   0% {
+       -webkit-transform: translate(5px, 0);
+  }
+   50% {
+       -webkit-transform: translate(-5px, 0);
+  }
+   100% {
+       -webkit-transform: translate(5px, 0);
+  }
+}
+
+/* * Styles for the Winning Popup */
+
  #popup {
      margin: auto;
      display: none;
@@ -168,6 +193,7 @@ html {
      background: #ffffff;
      text-align: center;
 }
+
  #win-banner {
      overflow:visible;
      width:921px;
@@ -175,55 +201,42 @@ html {
      top:-20px;
      position:absolute;
 }
+/* Gives space for where the banner is */
  .spacer {
      height:175px;
 }
+
  #star-container img {
      width:300px;
      height:150px;
-    /* top: -60px;
-     */
      position:relative;
 }
+
  #win-stats {
      padding:10px;
      font-size:14pt;
      display: flex;
      position:relative;
 }
+
  #win-stats span {
      font-size:40pt;
      line-height: 25pt;
 }
- @-webkit-keyframes wiggle {
-     0% {
-         -webkit-transform: translate(5px, 0);
-    }
-     50% {
-         -webkit-transform: translate(-5px, 0);
-    }
-     100% {
-         -webkit-transform: translate(5px, 0);
-    }
-}
+
  .col-3 {
      width:33%;
      display:block;
      justify-content: center;
      text-align: center;
 }
- .hint {
-     -webkit-animation-name: wiggle;
-     -webkit-animation-duration: 0.5s;
-     -webkit-transform-origin:50% 50%;
-     -webkit-animation-timing-function: linear;
-     background-color: #c0392b;
-}
-/* Styles for buttons Code by www.twitter.com/cheeriottis */
+
+/* Styles for buttons - Code by www.twitter.com/cheeriottis */
  .animate {
      transition: all 0.1s;
      -webkit-transition: all 0.1s;
 }
+
  .action-button {
      position: relative;
      padding: 10px 40px;
@@ -235,38 +248,45 @@ html {
      cursor: pointer;
      text-decoration: none;
 }
+
  .action-button.blue {
      background-color: #3498DB;
      border-bottom: 5px solid #2980B9;
      text-shadow: 0px -2px #2980B9;
      color: #FFF;
 }
+
  .action-button.red {
      background-color: #E74C3C;
      border-bottom: 5px solid #BD3E31;
      text-shadow: 0px -2px #BD3E31;
      color: #FFF;
 }
+
  .action-button.green {
      background-color: #27ae60;
      border-bottom: 5px solid #669644;
      text-shadow: 0px -2px #669644;
      color: #FFF;
 }
+
  .action-button.yellow {
      background-color: #f1c40f;
      border-bottom: 5px solid #D1B358;
      text-shadow: 0px -2px #D1B358;
      color: #FFF;
 }
+
  .action-button.moves {
      border: 3px solid #BD3E31;
 }
+
  .action-button:active {
      transform: translate(0px,5px);
      -webkit-transform: translate(0px,5px);
      border-bottom: 1px solid;
 }
+
  .action-button.btn-start {
      font-size: 2rem;
      background-color: #E74C3C;
@@ -275,6 +295,7 @@ html {
      color: #FFF;
      line-height: 3.5rem;
 }
+
  .btn-restart {
      float: none;
      margin-top: 35px;
@@ -288,6 +309,7 @@ html {
      opacity:0;
      text-shadow: 0px -5px #000;
 }
+
  #phrase-holder {
      z-index: 5;
      margin: auto;
@@ -296,6 +318,7 @@ html {
      display: none;
      pointer-events: none;
 }
+
  @keyframes textfade {
      0% {
          opacity: 0;
@@ -313,4 +336,3 @@ html {
          transform: scale(1.8);
     }
 }
- 
