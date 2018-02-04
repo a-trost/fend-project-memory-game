@@ -96,13 +96,7 @@ function cardClick(event) {
 };
 }
 
-function gameFinish() {
-    let seconds = (Date.now() - startTime)/1000;
-    let stars = returnStarRating(seconds, moveCounter)
-    const starContainer = document.getElementById('star-container')
 
-    document.getElementById('popup').style.display='block';
-};
 
 
 function placeCards(array) {
@@ -110,20 +104,15 @@ function placeCards(array) {
     for (i=0; i<array.length; i++) {
         const newCard = document.createElement('li');
         newCard.innerHTML = '<i class="fas fa-' + array[i].icon+'"></i>';
-        newCard.className = "card";
+        newCard.className = "card enter back";
         newCard.id= "card-"+i;
         array[i].position = 'card-'+i;
         fragment.appendChild(newCard);
     };
     gameSurface.appendChild(fragment);
-}
 
-function startGame() {
-    //Start Timer
-    let array = shuffle(createDeck());
-    let cardHolders = document.getElementsByClassName('card');
-    placeCards(array);
-}
+};
+
 
 function returnStarRating(seconds, moves) {
     let stars = 0;
@@ -157,22 +146,35 @@ function giveHint() {
         })
         let card1Node = document.getElementById(card1.position);
         let card2Node = document.getElementById(card2.position);
-
         card1Node.setAttribute('class', 'card hint');
         card2Node.setAttribute('class', 'card hint');
     }
     hintsUsed++;
 }
 
-function restartGame() {
+function gameFinish() {
+    let seconds = Math.round((Date.now() - startTime)/1000);
+    let stars = returnStarRating(seconds, moveCounter)
+    const starContainer = document.getElementById('star-container')
+    document.getElementById('popup').style.display='block';
+    document.getElementById('final-move-counter').innerText = moveCounter;
+    document.getElementById('final-time-counter').innerText = seconds;
+    document.getElementById('final-hint-counter').innerText = hintsUsed;
+};
+
+function startGame() {
     moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
-    startTime = Date.now();
+
     document.getElementById('move-counter').innerText = moveCounter;
     document.getElementById('popup').style.display='none';
+    document.getElementById('start-panel').style.display='none';
+    document.getElementById('score-panel').style.display='block';
     while (gameSurface.firstChild) {
     gameSurface.removeChild(gameSurface.firstChild);
     }
-    startGame();
+    array = shuffle(createDeck());
+    console.log(array);
+    let cardHolders = document.getElementsByClassName('card');
+    placeCards(array);
+    startTime = Date.now();
 }
-
-startGame();
