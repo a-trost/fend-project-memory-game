@@ -25,8 +25,10 @@ Try without hints!</div>
 
         <section id="score-panel">
         	<div class="action-button moves">Moves: <span id="move-counter">0</span></div>
-            <div onclick="giveHint()" class="action-button shadow animate green"><i class="fas fa-lightbulb"></i> Hint</div>
+            <div class="action-button moves">Time: <span id="game-timer">0</span></div>
+            <div onclick="giveHint()" class="action-button shadow animate blue"><i class="fas fa-lightbulb"></i> Hint</div>
             <div onclick="startGame()" class="action-button shadow animate yellow"><i class="fas fa-redo"></i> Restart</div>
+            
         </section>
 <div id="phrase-holder"></div>
 
@@ -34,15 +36,39 @@ Try without hints!</div>
         </ul>
     </div>
 
+
+
+
+
+
     <div id="popup">
-        <h2 class="winner">You Win!</h2>
-        <span id="star-container"></span>
-        <i class="fa fa-star"></i><i class="fa fa-star"></i>
-        <p>Moves: <span id="final-move-counter"></span></p>
-        <p>Time: <span id="final-time-counter"></span></p>
-<p>Hints Used: <span id="final-hint-counter"></span></p>
-        <button onclick="startGame()" class="action-button shadow animate red"><i class="fas fa-redo"></i> Restart</button>
+        <img id="win-banner" src="img/win.svg">
+        <div class="spacer"></div>
+        <span id="star-container"><img src="img/star-3.svg"></span>
+<div id="win-stats">
+    <div class="col-3">
+        <p>Moves</p>
+        <span id="final-move-counter"></span>
     </div>
+
+        <div class="col-3">
+            <p>Time</p>
+
+
+        <span id="final-time-counter"></span>
+    </div>
+
+        <div class="col-3">
+<p>Hints Used</p>
+
+
+<span id="final-hint-counter"></span>
+</div>
+</div>
+        <button onclick="startGame()" class="action-button shadow animate green btn-restart"><i class="fas fa-redo"></i> Play Again!</button>
+    </div>
+
+
 
     <script src="js/app.js"></script>
 </body>

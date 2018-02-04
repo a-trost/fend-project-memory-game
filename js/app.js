@@ -17,6 +17,7 @@ let icons = [
 ]
 let moveCounter = 0, openCards=[], array=[], remainingMatches=icons.length, hintsUsed=0;
 const phraseHolder = document.getElementById('phrase-holder')
+const timeHolder = document.getElementById('game-timer')
 let startTime = Date.now();
 const delayInMilliseconds = 1000; //Display cards for 1 sec
 var audio = new Audio('audio/card.mp3');
@@ -155,10 +156,24 @@ function giveHint() {
     hintsUsed++;
 }
 
+function gameTimer() {
+    timeHolder.innerText = Math.round((Date.now() - startTime)/1000);
+}
+
+function stopTimer() {
+    clearInterval(timer);
+}
+
+
+
+
+
 function gameFinish() {
+    stopTimer();
     let seconds = Math.round((Date.now() - startTime)/1000);
     let stars = returnStarRating(seconds, moveCounter)
     const starContainer = document.getElementById('star-container')
+    starContainer.innerHTML = '<img src="img/star-'+stars+'.svg">'
     document.getElementById('popup').style.display='block';
     document.getElementById('final-move-counter').innerText = moveCounter;
     document.getElementById('final-time-counter').innerText = seconds;
@@ -179,4 +194,5 @@ function startGame() {
     let cardHolders = document.getElementsByClassName('card');
     placeCards(array);
     startTime = Date.now();
+    timer = setInterval( gameTimer, 1000 );
 }
